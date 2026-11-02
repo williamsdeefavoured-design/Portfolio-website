@@ -14,3 +14,48 @@ enquiryForm.addEventListener('submit', event => {
   const body = encodeURIComponent(['Hello William,', '', brief, '', sender].join('\r\n'));
   window.location.href = enquiryForm.action + '?subject=' + subject + '&body=' + body;
 });
+
+// Ambient snow dropping animation (blurred blue dots)
+function initSnow() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const container = document.getElementById('snow-container');
+  if (!container) return;
+
+  const isMobile = window.innerWidth < 768;
+  const count = isMobile ? 22 : 45;
+  const fragment = document.createDocumentFragment();
+
+  for (let i = 0; i < count; i++) {
+    const flake = document.createElement('span');
+    flake.className = 'snowflake';
+
+    const size = (Math.random() * 4 + 3).toFixed(1); // 3px to 7px
+    const x = (Math.random() * 100).toFixed(2); // 0% to 100%
+    const duration = (Math.random() * 6 + 7).toFixed(1); // 7s to 13s
+    const delay = -(Math.random() * duration).toFixed(2); // Negative delay spreads flakes immediately
+    const opacity = (Math.random() * 0.35 + 0.25).toFixed(2); // 0.25 to 0.60 opacity
+    const blur = (Math.random() * 1.2 + 0.8).toFixed(1); // 0.8px to 2.0px light blur
+    const s1 = ((Math.random() - 0.5) * 36).toFixed(1);
+    const s2 = ((Math.random() - 0.5) * 44).toFixed(1);
+    const s3 = ((Math.random() - 0.5) * 36).toFixed(1);
+    const s4 = ((Math.random() - 0.5) * 26).toFixed(1);
+
+    flake.style.setProperty('--snow-x', `${x}%`);
+    flake.style.setProperty('--snow-size', `${size}px`);
+    flake.style.setProperty('--snow-duration', `${duration}s`);
+    flake.style.setProperty('--snow-delay', `${delay}s`);
+    flake.style.setProperty('--snow-opacity', opacity);
+    flake.style.setProperty('--snow-blur', `${blur}px`);
+    flake.style.setProperty('--snow-sway-1', `${s1}px`);
+    flake.style.setProperty('--snow-sway-2', `${s2}px`);
+    flake.style.setProperty('--snow-sway-3', `${s3}px`);
+    flake.style.setProperty('--snow-sway-4', `${s4}px`);
+
+    fragment.appendChild(flake);
+  }
+
+  container.appendChild(fragment);
+}
+
+initSnow();
